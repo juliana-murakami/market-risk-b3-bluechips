@@ -91,6 +91,7 @@ market-risk-b3-bluechips/
 ├── requirements.txt
 ├── analise_risco_bluechips_b3.ipynb    # Notebook com análise completa
 ├── app.py                              # Dashboard Streamlit interativo
+├── dashboard-b3-GIF                      
 ├── data/
 │   ├── raw/
 │   └── processed/
