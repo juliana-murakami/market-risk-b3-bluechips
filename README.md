@@ -2,9 +2,9 @@
 
 **Dashboard Interativo**
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://market-risk-b3.streamlit.app/)
+**Dashboard Interativo**
 
-[Acesse o dashboard online](https://market-risk-b3.streamlit.app/)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://market-risk-b3.streamlit.app/)
 
 [![Dashboard Preview](dashboard-b3.GIF)](https://market-risk-b3.streamlit.app/)
 
