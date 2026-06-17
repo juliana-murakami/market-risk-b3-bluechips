@@ -59,28 +59,33 @@ def carregar_dados():
 with st.spinner("Carregando dados..."):
     returns, port_returns = carregar_dados()
 
+# Validação de dados
+if len(port_returns) == 0 or len(returns) == 0:
+    st.error("❌ Erro ao carregar dados. Verifique sua conexão com a internet ou tente novamente.")
+    st.stop()
+
 mu    = port_returns.mean()
 sigma = port_returns.std()
 z     = norm.ppf(CONF)
 var_hist   = -port_returns.quantile(1 - CONF)
 var_param  = -(mu - z * sigma)
 tail       = port_returns[port_returns <= -var_hist]
-cvar_hist  = -tail.mean()
+cvar_hist  = -tail.mean() if len(tail) > 0 else 0
 cvar_param = -(mu - sigma * norm.pdf(z) / (1 - CONF))
 sk         = skew(port_returns)
 ku         = kurtosis(port_returns)
 cum_port   = np.exp(port_returns.cumsum())
 cum_ibov   = np.exp(returns["IBOV"].cumsum())
 max_dd     = ((cum_port - cum_port.cummax()) / cum_port.cummax()).min()
-retorno_total = cum_port.iloc[-1] - 1
+retorno_total = cum_port.iloc[-1] - 1 if len(cum_port) > 0 else 0
 vol_anual  = sigma * np.sqrt(252)
-sharpe     = (mu * 252) / vol_anual
+sharpe     = (mu * 252) / vol_anual if vol_anual > 0 else 0
 var_rolling = -port_returns.rolling(WINDOW).quantile(1 - CONF).shift(1)
 bt = pd.DataFrame({"retorno": port_returns, "var": var_rolling}).dropna()
 bt["excecao"] = bt["retorno"] < -bt["var"]
 n_total    = len(bt)
 n_excecoes = int(bt["excecao"].sum())
-taxa_obs   = n_excecoes / n_total
+taxa_obs   = n_excecoes / n_total if n_total > 0 else 0
 taxa_esp   = 1 - CONF
 
 # título
